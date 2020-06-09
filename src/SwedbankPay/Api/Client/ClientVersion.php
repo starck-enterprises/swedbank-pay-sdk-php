@@ -177,7 +177,7 @@ class ClientVersion
         $paths = [];
 
         // Standard path of composer.lock
-        $path = $this->getComposerPath() . DIRECTORY_SEPARATOR . 'composer.lock';
+        $path = base_path('composer.lock');
         $paths[] = $path;
 
         // Alternate path of composer.lock
@@ -188,10 +188,12 @@ class ClientVersion
 
         foreach ($paths as $path) {
             $composerLock = null;
-            $result = $this->tryFindVersionInComposerLock($composerLock);
-            if ($this->tryReadComposerLock($composerLock, $path) && $result) {
+           // $result = $this->tryFindVersionInComposerLock($composerLock);
+            //if ($this->tryReadComposerLock($composerLock, $path) && $result) {
+            if ($this->tryReadComposerLock($composerLock, $path) &&
+                $result = $this->tryFindVersionInComposerLock($composerLock)
+            ) {
                 $version = $result;
-
                 return true;
             }
         }
@@ -269,7 +271,7 @@ class ClientVersion
         foreach ($packages as $package) {
             if (!isset($package['version']) ||
                 !isset($package['name']) ||
-                $package['name'] !== 'swedbank-pay/swedbank-pay-sdk-php'
+                $package['name'] !== 'starck-enterprises/swedbank-pay-sdk-php'
             ) {
                 continue;
             }
